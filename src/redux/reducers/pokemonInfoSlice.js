@@ -1,5 +1,4 @@
 import { createSlice ,createAsyncThunk } from "@reduxjs/toolkit";
-import { act } from "@testing-library/react";
 
 const initialState = {
     loading: false,
@@ -15,8 +14,9 @@ async (name, {rejectWithValue})=>{
         if(!response.ok){
             throw new Error('Error!!!')
         }
-
+        
         const data = response.json();
+
         return data
     
     } catch (error) {
@@ -42,6 +42,10 @@ const pokemonInfoSlice = createSlice({
             state.error = action.payload
         }
     }
+    
 })
+
+
+
 
 export default pokemonInfoSlice.reducer;

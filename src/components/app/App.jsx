@@ -15,7 +15,7 @@ let {pokemon} = useParams();
       <Header />   
       <Routes>
         <Route path = '/' exact element = {<PokemonsList />} />
-        <Route path = '/pokemon/:pokemon' element = {<Pokemon />} />
+        <Route path = '/pokemon/:pokemon' exact element = {<Pokemon />} />
         <Route path = '/help' element = {<h1>help page</h1>} />
         <Route path = '/contacts' element = {<h1>contact page</h1>} />
       </Routes>

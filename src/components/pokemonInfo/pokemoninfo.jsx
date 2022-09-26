@@ -6,8 +6,20 @@ import { fetchPokemonInfo } from "../../redux/reducers/pokemonInfoSlice";
 
 
 const Pokemon = (props) =>{
-    
-    
+    const {pokemon} = useParams();
+
+    const dispatch = useDispatch();
+    const pokeInfo = useSelector(state => state.pokemonInfo)
+
+    console.log(pokeInfo.pokemonInfo.name);
+
+    useEffect (()=>{
+        dispatch(fetchPokemonInfo(pokemon))
+    },[dispatch])
+
+
+
+
     return (
         <div>
             <h1>Hello world</h1>
