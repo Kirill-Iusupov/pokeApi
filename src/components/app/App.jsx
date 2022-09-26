@@ -1,14 +1,12 @@
 import './App.css';
 import React from 'react';
-import { Routes , Route, useParams } from 'react-router-dom'
+import { Routes , Route } from 'react-router-dom'
 import Header from '../header';
 import Footer from '../footer';
 import PokemonsList from '../pokemonsList'
 import Pokemon from '../pokemonInfo/pokemoninfo';
 
 function App() {
-
-let {pokemon} = useParams();
 
   return (
     <div className="app">

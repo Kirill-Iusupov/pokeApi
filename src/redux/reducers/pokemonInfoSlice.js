@@ -39,6 +39,7 @@ const pokemonInfoSlice = createSlice({
         },
         [fetchPokemonInfo.rejected]: (state, action) =>{
             state.loading = false;
+            state.pokemonInfo = {};
             state.error = action.payload
         }
     }
