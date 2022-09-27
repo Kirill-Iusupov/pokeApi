@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header />   
+      <Header />  
       <Routes>
         <Route path = '/' exact element = {<PokemonsList />} />
         <Route path = '/pokemon/:pokemon' exact element = {<Pokemon />} />

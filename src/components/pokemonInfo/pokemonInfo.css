@@ -1,0 +1,19 @@
+.pokeInformation {
+    padding: 25px;
+    display: flex;
+    justify-content: space-around;
+
+}
+.pokemonInfo h2{
+    text-transform: uppercase   ;
+}
+
+.pokemonInfo img {
+    width: 250px;
+    height: 250px;
+    border: 5px solid #000;
+    border-radius: 50%;
+}
+.pokeInformation .pokemonIN {
+    text-align: center;
+}

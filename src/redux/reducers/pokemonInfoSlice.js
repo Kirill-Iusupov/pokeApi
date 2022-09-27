@@ -2,15 +2,16 @@ import { createSlice ,createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
     loading: false,
-    pokemonInfo: {},
-    error:''
+    data: {},
+    error:'',
+    images: {}
 }
 
 
 export const fetchPokemonInfo = createAsyncThunk('pokemonInfo/fetchPokemonInfo',
 async (name, {rejectWithValue})=>{
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`)
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
         if(!response.ok){
             throw new Error('Error!!!')
         }
@@ -30,16 +31,18 @@ const pokemonInfoSlice = createSlice({
     extraReducers: {
         [fetchPokemonInfo.pending]: (state) =>{
             state.loading = true;
+            state.data = {};
             state.error = '';
         },
         [fetchPokemonInfo.fulfilled]: (state, action) =>{
             state.loading = false;
             state.error = '';
-            state.pokemonInfo = action.payload
+            state.data = action.payload;
+            state.images = action.payload.sprites.other.dream_world.front_default;
         },
         [fetchPokemonInfo.rejected]: (state, action) =>{
             state.loading = false;
-            state.pokemonInfo = {};
+            state.data = {};
             state.error = action.payload
         }
     }
