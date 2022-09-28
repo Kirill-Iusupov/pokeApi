@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom'
 const PokemonsList = () => {
 
     const pokemon = useSelector(state => state.pokemonList)
-    
-
     const dispatch = useDispatch();
 
     useEffect( () => {
@@ -16,11 +14,10 @@ const PokemonsList = () => {
     },[dispatch])
     
     
-
     return(
         <div className='pokemonList container'>
             <h2>Pokemons List</h2>
-            {pokemon.loading === true && <h2>Loading...</h2>}
+            {pokemon.loading  && <h2>Loading...</h2>}
             {!pokemon.loading && pokemon.error ? <h2>Error:{pokemon.error}</h2>: null}
             {!pokemon.loading && pokemon.pokemons.length ? <div className="pokemon">{
                 pokemon.pokemons.map(pokemon=>(
@@ -32,7 +29,7 @@ const PokemonsList = () => {
                             <Link to = {`/pokemon/${pokemon.name}`}>More</Link>
                         </span>
                         <span className='botBall'>
-                            <a href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name}_(Pokémon)`}>Bulbapedia (Full information)</a>
+                            <a href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name}_(Pokémon)`} target='_blank'>Bulbapedia (Full information)</a>
                         </span>
                     </div>
                 ))

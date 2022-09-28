@@ -1,8 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import axios from 'axios';
 
 const initialState = {
     
-    loading: false,
+    loading: true,
 
     pokemons: [],
 
@@ -15,15 +16,15 @@ const initialState = {
 export const fetchPokemons = createAsyncThunk('pokemonsList/fetchPokemons', 
     async  (_, {rejectWithValue}) => {
         try {
-            const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=15&offset=0')
-        
-            if (!response.ok){
-                throw new Error("Server Error!");
-            }
+            const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=15&offset=0')
             
-            const data = response.json();
-            
+            console.log('response=>', response.data);
+
+            const data = await response.data;
+
+
             return data; 
+
         } catch (error) {
             return rejectWithValue(error.message)
         }
@@ -37,7 +38,6 @@ const pokemonListSlice = createSlice({
     extraReducers: {
         [fetchPokemons.pending]: (state)=>{
             state.loading = true;
-            state.pokemons = [];
         },
         [fetchPokemons.fulfilled]: (state, action) => {
             state.loading = false;

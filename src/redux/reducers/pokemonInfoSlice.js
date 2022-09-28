@@ -1,10 +1,10 @@
-import { createSlice ,createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    loading: false,
+    loading: true,
     data: {},
     error:'',
-    images: {}
+    images: {},
 }
 
 
@@ -16,7 +16,7 @@ async (name, {rejectWithValue})=>{
             throw new Error('Error!!!')
         }
         
-        const data = response.json();
+        const data = await response.json();
 
         return data
     
