@@ -1,12 +1,12 @@
 import React,{useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchPokemonDetail } from "../../redux/reducers/pokemonDetailSlice";
-import { fetchPokemonInfo } from "../../redux/reducers/pokemonInfoSlice";
+import { fetchPokemonDetail } from "../../redux/slices/pokemonDetailSlice";
+import { fetchPokemonInfo } from "../../redux/slices/pokemonInfoSlice";
 import '../pokemonInfo/pokemonInfo.css'
 
 
-const Pokemon = (props) =>{
+const Pokemon = () =>{
     const {pokemon} = useParams();
 
 
@@ -22,8 +22,7 @@ const Pokemon = (props) =>{
 
 
     const pokeText= Array.from(pokeDetail.pokemonText)
-    console.log(pokeDetail);
-
+    
     const pokeData = pokeInfo.data;
     const pokeImgs = pokeInfo.images;
 
@@ -36,10 +35,10 @@ const Pokemon = (props) =>{
                 <div className="pokeInformation">
                     <div className="text">
                         <p>Specs text</p>
-                        {pokeText.map(elem => {
+                        {pokeText.map((elem, index) => {
                             if (elem.language.name === 'en'){
                                 return(
-                                    <div key ={elem.id}>
+                                    <div key ={index}>
                                         <p>{elem.flavor_text}</p>
                                     </div>
                                 )

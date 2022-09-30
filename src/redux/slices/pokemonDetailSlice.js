@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
     loading: true,
@@ -8,21 +9,20 @@ const initialState = {
 }
 
 export const fetchPokemonDetail = createAsyncThunk('pokemonDetail/fetchPokemonDetail',
-async (name, {rejectWithValue})=>{
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`)
-        if(!response.ok) {
-            throw new Error('Error!!!')
-        }
+    async (name, {rejectWithValue})=>{
+        try {
+            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${name}`)
+            
+            const data = await response.data;
 
-        const data = await response.json();
+            return data
 
-        return data
-
-    } catch (error) {
-        return rejectWithValue(error.message)
-    }  
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }  
 })
+
+
 
 
 const pokemonDetailSlice = createSlice({
