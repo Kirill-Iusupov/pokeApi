@@ -5,6 +5,8 @@ import Header from '../header';
 import Footer from '../footer';
 import PokemonsList from '../pokemonsList'
 import Pokemon from '../pokemonInfo/pokemoninfo';
+import Help from '../help/help';
+import Contact from "../contact/contact"
 
 function App() {
 
@@ -14,8 +16,8 @@ function App() {
       <Routes>
         <Route path = '/' exact element = {<PokemonsList />} />
         <Route path = '/pokemon/:pokemon' exact element = {<Pokemon />} />
-        <Route path = '/help' element = {<h1>help page</h1>} />
-        <Route path = '/contacts' element = {<h1>contact page</h1>} />
+        <Route path = '/help' element = { <Help /> } />
+        <Route path = '/contacts' element = { <Contact /> } />
       </Routes>
       <Footer />
     </div>

@@ -4,16 +4,20 @@ import axios from 'axios';
 const initialState = {
     loading: true,
     pokemons: [],
-    error: ''
+    error: '',
+    count: ''
 }
 
 
 
 
 export const fetchPokemons = createAsyncThunk('pokemonsList/fetchPokemons', 
-    async  (_, {rejectWithValue}) => {
+    async  ( page, {rejectWithValue}) => {
         try {
-            const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=15&offset=0')
+            const perPage = 15
+            const offset = (page * perPage)-perPage
+
+            const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${perPage}&offset=${offset}`)
 
             const data = await response.data;
 
@@ -23,7 +27,6 @@ export const fetchPokemons = createAsyncThunk('pokemonsList/fetchPokemons',
             return rejectWithValue(error.message)
         }
         
-
 })
 
 const pokemonListSlice = createSlice({
@@ -36,6 +39,7 @@ const pokemonListSlice = createSlice({
         [fetchPokemons.fulfilled]: (state, action) => {
             state.loading = false;
             state.pokemons = action.payload.results;
+            state.count = action.payload.count;
         },
         [fetchPokemons.rejected]: (state, action)=>{ 
             state.loading = false;

@@ -2,48 +2,77 @@ import './pokemonList.css'
 import React , { useEffect }from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPokemons } from "../../redux/slices/pokemonListSlice";
-import { Link } from 'react-router-dom'
+import {ThreeCircles} from 'react-loader-spinner' 
+import ReactPaginate from 'react-paginate';
+import { Link } from 'react-router-dom';
+
 
 const PokemonsList = () => {
 
-    const pokemon = useSelector(state => state.pokemonList)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
+    const pokemons = useSelector(state => state.pokemonList) 
 
-    useEffect( () => {
-        dispatch(fetchPokemons());
-    },[dispatch])
+    const FetchList = (page = 1 ) =>{
+        dispatch(fetchPokemons(page))
+    }
     
-    
+    useEffect(() => {
+        FetchList()
+    },[ ])
 
-    console.log(pokemon);
-    
+
+    let pokeDetail = []
+
+
+    pokemons.pokemons.forEach((pokemon)=>{
+        let pokeData = {
+            id: pokemon.url.slice(34,-1),
+            name: pokemon.name,
+            pokeImg: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.slice(34,-1)}.png`
+        }
+        pokeDetail.push(pokeData)
+    })
+
+
+
+
+
     return(
         <div className='pokemonList container'>
             <h2>Pokemons List</h2>
-            <div className='sorting'>
-                <p>Сортировать по:</p>
-                <a href="">Популярности</a>
-                <a href="">Рейтингу</a>
-                <a href="">Уровню силы</a>
-            </div>
-            {pokemon.loading  && <h2>Loading...</h2>}
-            {!pokemon.loading && pokemon.error ? <h2>Error:{pokemon.error}</h2>: null}
-            {!pokemon.loading && pokemon.pokemons.length ? <div className="pokemon">{
-                pokemon.pokemons.map(pokemon=>(
-                    <div key={pokemon.name} className='pokemonItem'>
-                        <span className='topBall'>
-                            <p>{pokemon.name}</p>
-                        </span>
-                        <span className='midleBall'>
-                            <Link to = {`/pokemon/${pokemon.name}`}>More</Link>
-                        </span>
-                        <span className='botBall'>
-                            <a href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name}_(Pokémon)`} target='_blank'>Bulbapedia (Full information)</a>
-                        </span>
-                    </div>
-                ))
-            }
+            {pokemons.loading  && <ThreeCircles
+                                    height="100"
+                                    width="100"
+                                    color="#4fa94d"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                    visible={true}
+                                    ariaLabel="three-circles-rotating"
+                                    outerCircleColor=""
+                                    innerCircleColor=""
+                                    middleCircleColor=""
+                                    />}
+            {!pokemons.loading && pokemons.error ? <h2>Error:{pokemons.error}</h2>: null}
+            {!pokemons.loading && pokemons.pokemons.length ?
+                <div className="pokemon">{  
+                    pokeDetail.map(elem=>{
+                        return (
+                            <Link key = {elem.id} className="pokemonCard" to={`/pokemon/${elem.name}` }>
+                                <img src={elem.pokeImg} alt="" />
+                                <p>{elem.name}</p>
+                            </Link>
+                        )
+                    })}
                 </div>: null}
+            <ReactPaginate 
+                pageCount={Math.ceil(pokemons.count / 15)}
+                pageRangeDisplayed = {2}
+                marginPagesDisplayed = {1}
+                onPageChange = {(data) => {FetchList(data.selected+1)} }
+                containerClassName = {'paginate'}
+                previousLabel = {'<'}
+                nextLabel = {'>'}
+            />
         </div>
     )
 }

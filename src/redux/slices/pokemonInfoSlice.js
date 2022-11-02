@@ -5,7 +5,9 @@ const initialState = {
     loading: true,
     data: {},
     error:'',
-    images: {}
+    images: {},
+    types: [],
+    stats: []
 }
 
 
@@ -36,6 +38,9 @@ const pokemonInfoSlice = createSlice({
             state.loading = false;
             state.data = action.payload;
             state.images = action.payload.sprites.other.dream_world.front_default;
+            state.types = action.payload.types;
+            state.stats = action.payload.stats;
+
         },
         [fetchPokemonInfo.rejected]: (state, action) =>{
             state.loading = false;

@@ -8,7 +8,7 @@
     text-transform: uppercase   ;
 }
 
-.pokemonInfo img {
+.pokemonInfo .mainImg {
     width: 250px;
     height: 250px;
     border: 5px solid #000;
@@ -16,4 +16,15 @@
 }
 .pokeInformation .pokemonIN {
     text-align: center;
+    min-width: 390px;
+}
+.pokeType span{
+    text-transform: uppercase;
+}
+.pokeType{
+    margin: 0 5px;
+}
+
+.pokemonIN .stat {
+    margin: 5px;
 }
